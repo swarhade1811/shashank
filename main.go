@@ -7,6 +7,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 var db *sql.DB
@@ -21,6 +22,16 @@ func main() {
 
 	// Initialize the router
 	router := mux.NewRouter()
+
+	// corsMiddleware := cors.New(cors.Options{
+	// 	AllowedOrigins:   []string{"http://localhost:3000"},
+	// 	AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+	// 	AllowedHeaders:   []string{"Content-Type"},
+	// 	AllowCredentials: true,
+	// })
+	corsMiddleware := cors.Default()
+
+	router.Use(corsMiddleware.Handler)
 
 	// Define API routes
 	router.HandleFunc("/feed-configurations", getAllFeedConfigurations).Methods("GET")

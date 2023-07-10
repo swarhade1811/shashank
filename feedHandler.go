@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -21,6 +22,7 @@ type FeedConfiguration struct {
 
 // Handler to get all feed configurations
 func getAllFeedConfigurations(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	feedConfigurations := []FeedConfiguration{}
 
 	rows, err := db.Query("SELECT * FROM feed_configurations")
@@ -59,6 +61,10 @@ func getFeedConfiguration(w http.ResponseWriter, r *http.Request) {
 
 // Handler to create a new feed configuration
 func createFeedConfiguration(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Success")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+
 	var fc FeedConfiguration
 	_ = json.NewDecoder(r.Body).Decode(&fc)
 

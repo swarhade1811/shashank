@@ -10,19 +10,19 @@ import (
 )
 
 type FeedConfiguration struct {
-	ID              int    `json:"id"`
-	Location        string `json:"location"`
-	IndexName       string `json:"index_name"`
-	Frequency       string `json:"frequency"`
-	Columns         string `json:"columns"`
-	Cap             int    `json:"cap"`
-	Scrub           bool   `json:"scrub"`
-	LookALikeConfig string `json:"look_a_like_config"`
+	ID              int    `json:"Id"`
+	Location        string `json:"Location"`
+	IndexName       string `json:"IndexName"`
+	Frequency       string `json:"Frequency"`
+	Columns         string `json:"Columns"`
+	Cap             string `json:"Cap"`
+	Scrub           string `json:"Scrub"`
+	LookALikeConfig string `json:"Lookalikeconfig"`
 }
 
 // Handler to get all feed configurations
 func getAllFeedConfigurations(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Origin", "localhost:3000")
 	feedConfigurations := []FeedConfiguration{}
 
 	rows, err := db.Query("SELECT * FROM feed_configurations")
@@ -64,9 +64,13 @@ func createFeedConfiguration(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Success")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST")
+	w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type, x-requested-with")
+	w.Header().Set("Content-Type", "application/json")
 
 	var fc FeedConfiguration
 	_ = json.NewDecoder(r.Body).Decode(&fc)
+	fmt.Println(fc)
 
 	insertQuery := `INSERT INTO feed_configurations (location, index_name, frequency, columns, cap, scrub, look_a_like_config)
 		VALUES (?, ?, ?, ?, ?, ?, ?)`

@@ -22,8 +22,8 @@ func createTable() {
 		index_name VARCHAR(255) NOT NULL,
 		frequency VARCHAR(255) NOT NULL,
 		columns VARCHAR(255) NOT NULL,
-		cap INT NOT NULL,
-		scrub BOOLEAN NOT NULL,
+		cap VARCHAR(255) NOT NULL,
+		scrub VARCHAR(255) NOT NULL,
 		look_a_like_config VARCHAR(255) NOT NULL
 	);`
 
